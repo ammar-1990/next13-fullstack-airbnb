@@ -1,13 +1,15 @@
-
+'use client'
 import Container from "../Container"
 import Logo from "./Logo"
 import Search from "./Search"
 import UserMenu from "./UserMenu"
+import {User} from '@prisma/client'
 
 
-type Props = {}
+type Props = {currentUser?:User | null}
 
-const Navbar = (props: Props) => {
+const Navbar = ({currentUser}: Props) => {
+  console.log(currentUser)
   return (
     <div className="fixed w-full bg-white shadow-sm z-10  py-4 border-b">
         <Container>
