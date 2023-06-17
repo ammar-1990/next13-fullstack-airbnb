@@ -6,7 +6,8 @@ import useLoginModal from "@/hooks/useLoginModal";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import axios from "axios";
 import Input from "../Input";
-import toast from 'react-hot-toast'
+import toast from "react-hot-toast";
+import {signIn} from 'next-auth/react'
 
 type Props = {};
 
@@ -33,7 +34,7 @@ const RegisterModal = (props: Props) => {
     axios
       .post("/api/register", data)
       .then(() => registerModal.onClose())
-      .catch((error) => toast.error('Something went wrong'))
+      .catch((error) => toast.error("Something went wrong"))
       .finally(() => setIsLoading(false));
   };
   const bodyContent = (
@@ -41,15 +42,52 @@ const RegisterModal = (props: Props) => {
       <h1 className="text-xl font-semibold py-2">Welcome to Airbnb</h1>
       <p className="text-gray-500 text-xs py-2">Create an account!</p>
       <div className="space-y-2">
-      <Input register={register} id="email" type="email" label="email" errors={errors} disabled={isLoading} required={true}/>
-      <Input register={register} id="name" type="name" label="name" errors={errors} disabled={isLoading} required={true}/>
-      <Input register={register} id="password" type="password" label="password" errors={errors} disabled={isLoading} required={true}/>
+        <Input
+          register={register}
+          id="email"
+          type="email"
+          label="email"
+          errors={errors}
+          disabled={isLoading}
+          required={true}
+        />
+        <Input
+          register={register}
+          id="name"
+          type="name"
+          label="name"
+          errors={errors}
+          disabled={isLoading}
+          required={true}
+        />
+        <Input
+          register={register}
+          id="password"
+          type="password"
+          label="password"
+          errors={errors}
+          disabled={isLoading}
+          required={true}
+        />
       </div>
     </div>
   );
 
-
-  const footerContent = <p className="text-neutral-500">Already have an account ?  <span className="text-neutral-800 cursor-pointer" onClick={registerModal.onClose}>Login</span></p>
+  const footerContent = (
+    <div>
+      {/* <button type="button" onClick={()=>signIn('github')} className="bg-slate-900 text-white rounded-md py-3 w-full">Continue with Github</button> */}
+      {" "}
+      <p className="text-neutral-500 mt-3">
+        Already have an account ?{" "}
+        <span
+          className="text-neutral-800 cursor-pointer"
+          onClick={registerModal.onClose}
+        >
+          Login
+        </span>
+      </p>
+    </div>
+  );
 
   return (
     <Modal
@@ -61,6 +99,7 @@ const RegisterModal = (props: Props) => {
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
+      secondaryLabel="Login with Github"
     />
   );
 };

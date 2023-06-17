@@ -12,6 +12,7 @@ const Container = ({ children }: Props) => {
   md:px-10 
   sm:px-2
   px-4
+  
   "
     >
       {children}

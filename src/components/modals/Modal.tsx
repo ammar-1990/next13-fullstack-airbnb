@@ -83,7 +83,7 @@ const Modal = ({
 
           <button disabled={disabled} className="bg-rose-500 text-white rounded-md py-3 m-5 disabled:opacity-50 ">{actionLabel}</button>
 
-          <div className="px-5 py-12">
+          <div className="px-5 py-10 border-t">
             {footer}
             </div>
         </form>
