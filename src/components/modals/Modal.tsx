@@ -13,7 +13,7 @@ type Props = {
   actionLabel: string;
   disabled?: boolean;
   secondaryAction?: () => void;
-  secondaryLabel?: string;
+  secondaryActionLabel?: string;
 };
 
 const Modal = ({
@@ -26,7 +26,7 @@ const Modal = ({
   actionLabel,
   disabled,
   secondaryAction,
-  secondaryLabel,
+  secondaryActionLabel,
 }: Props) => {
   const [showModal, setShowModal] = useState(isOpen);
 
@@ -58,7 +58,7 @@ const Modal = ({
   return (
     <>
       <div className="fixed inset-0 bg-neutral-800/70 z-50 flex items-center justify-center">
-        <form onSubmit={onSubmit}
+        <form 
           className={`w-full md:w-4/6 lg:w-3/6 xl:w-2/6 h-full my-6 mx-auto md:h-auto bg-white  shadow-md md:rounded-lg flex flex-col ${
             showModal
               ? "opacity-100 translate-y-0 "
@@ -79,13 +79,15 @@ const Modal = ({
 {body}
           </div>
 
-         
+         <div className="flex gap-3 items-center w-full my-5 p-5">
+         {secondaryActionLabel && <button type="button" className="rounded-md py-3  disabled:opacity-50 border flex-1 border-black" onClick={secondaryAction}>{secondaryActionLabel}</button>}
+          <button onClick={onSubmit} type="button" disabled={disabled} className="bg-rose-500 flex-1 text-white rounded-md py-3  disabled:opacity-50 ">{actionLabel}</button>
+         </div>
 
-          <button disabled={disabled} className="bg-rose-500 text-white rounded-md py-3 m-5 disabled:opacity-50 ">{actionLabel}</button>
 
-          <div className="px-5 py-10 border-t">
+         {footer&& <div className="px-5 py-10 border-t">
             {footer}
-            </div>
+            </div>}
         </form>
 
 

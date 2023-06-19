@@ -7,6 +7,7 @@ import RegisterModal from '@/components/modals/RegisterModal'
 import ToasterProvider from '@/providers/ToasterProvider'
 import LoginModal from '@/components/modals/LoginModal'
 import { getSession } from '@/actions/getCurrentUser'
+import RentModal from '@/components/modals/RentModal'
 
 
 export const metadata = {
@@ -30,6 +31,7 @@ const currentUser = await getSession()
   return (
     <html lang="en">
       <body className={font.className}>
+        <RentModal />
         <RegisterModal   />
      <LoginModal />
         <Navbar currentUser={currentUser} />

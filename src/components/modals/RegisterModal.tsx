@@ -13,6 +13,7 @@ type Props = {};
 
 const RegisterModal = (props: Props) => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal()
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
     register,
@@ -81,8 +82,8 @@ const RegisterModal = (props: Props) => {
         Already have an account ?{" "}
         <span
           className="text-neutral-800 cursor-pointer"
-          onClick={registerModal.onClose}
-        >
+    
+          onClick={()=>{loginModal.onOpen();registerModal.onClose()}} >
           Login
         </span>
       </p>

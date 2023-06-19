@@ -13,7 +13,7 @@ import {useRouter} from 'next/navigation'
 type Props = {};
 
 const LoginModal = (props: Props) => {
-  const { isOpen, onClose } = useRegisterModal();
+  const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
@@ -74,9 +74,9 @@ const LoginModal = (props: Props) => {
 
   const footerContent = (
     <p className="text-neutral-500">
-      Already have an account ?{" "}
-      <span className="text-neutral-800 cursor-pointer" onClick={onClose}>
-        Login
+     First time visiting Airbnb ?{" "}
+      <span className="text-neutral-800 cursor-pointer" onClick={()=>{loginModal.onClose();registerModal.onOpen()}}>
+        Create an account.
       </span>
     </p>
   );
