@@ -1,3 +1,4 @@
+'use client'
 import { useCallback } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { AiOutlineMinus } from "react-icons/ai";
