@@ -100,7 +100,7 @@ const RegisterModal = (props: Props) => {
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
-      secondaryLabel="Login with Github"
+      secondaryActionLabel="Login with Github"
     />
   );
 };

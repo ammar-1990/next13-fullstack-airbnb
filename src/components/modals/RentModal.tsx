@@ -11,6 +11,7 @@ import CountrySelect from "../CountrySelect";
 import dynamic from "next/dynamic";
 import Counter from "../Counter";
 import ImageUpload from "../ImageUpload";
+import Input from "../Input";
 
 type Props = {};
 
@@ -66,6 +67,7 @@ const RentModal = (props: Props) => {
   }
 
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onBack = () => setStep((prev) => prev - 1);
   const onNext = () => setStep((prev) => prev + 1);
@@ -167,6 +169,59 @@ onChange={(value)=>setCustomValues('imageSrc',value)}
 />
   </div>
 )
+  }
+
+
+  if (step === STEPS.DESCRIPTION)  {
+    bodyContent=(
+      <div className="flex flex-col gap-4">
+        <Heading
+        title="How would you descripe your place?"
+        description="Short and sweet works best"
+        />
+
+<Input
+          register={register}
+          id="title"
+          type="text"
+          label="Title"
+          errors={errors}
+          disabled={isLoading}
+          required={true}
+        />
+        <hr/>
+        <Input
+          register={register}
+          id="description"
+          type="text"
+          label="Description"
+          errors={errors}
+          disabled={isLoading}
+          required={true}
+        />
+      </div>
+    )
+  }
+
+
+  if (step === STEPS.PRICE) {
+    bodyContent=(
+      <div className="flex flex-col gap-4">
+        <Heading 
+        title="Now, set your price"
+        description="How much do you charge per night?"
+        />
+              <Input
+          register={register}
+          id="price"
+          type="number"
+          label="Price"
+          errors={errors}
+          disabled={isLoading}
+          required={true}
+        />
+      </div>
+    )
   }
 
   return (
