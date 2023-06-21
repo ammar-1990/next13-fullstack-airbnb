@@ -1,15 +1,21 @@
+import { getSession } from '@/actions/getCurrentUser'
+import getListings from '@/actions/getListings'
 import Container from '@/components/Container'
 import EmptyState from '@/components/EmptyState'
+import ListingCard from '@/components/listing/ListingCard'
 import Image from 'next/image'
 
-export default function Home() {
-const isEmpty = true
+export default async function Home() {
+  const listings = await getListings()
+const currentUser =await getSession()
 
 
-if(isEmpty) return <EmptyState  showReset/>
+
+
+if(listings.length === 0) return <EmptyState  showReset/>
 
   return (
-   <div className=''>
+   <div className='pt-4'>
 
     <Container>
       <div className='
@@ -21,7 +27,7 @@ if(isEmpty) return <EmptyState  showReset/>
       xl:grid-cols-5
       gap-8
       '>
-<div>my feature listings</div>
+{listings.map((listing:any)=>(<ListingCard key={listing.id} data={listing} currentUser={currentUser}/>))}
       </div>
     </Container>
    </div>

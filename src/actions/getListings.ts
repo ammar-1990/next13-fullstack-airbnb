@@ -1,8 +1,17 @@
-import prisma from '../util/prismadb'
+import prisma from "../util/prismadb";
 
+export default async function getListings() {
+  try {
+    const listings = await prisma.listing.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return listings
 
+  } catch (error: any) {
+    throw new Error(error);
 
-export default async function getListings (){
-
-
+    console.log(error);
+  }
 }

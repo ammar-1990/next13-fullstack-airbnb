@@ -8,7 +8,7 @@ export async function POST(request:Request){
     if(!currentUser) return NextResponse.error()
 
     const body = await request.json()
-
+console.log(body)
     const {
         category,
         location,
@@ -25,23 +25,30 @@ export async function POST(request:Request){
         if(!body[val]) return NextResponse.error()
     })
 
-const listing = prisma.listing.create({
-  data:{
-    category,
-    locationValue:location.value,
-    guestCount,
-    roomCount,
-    bathroomCount,
-    imageSrc,
-    price:parseInt(price),
-    title,
-    description,
-    userId:currentUser.id
-  }
-})
+    try {
+        
+        const listing =await  prisma.listing.create({
+            data:{
+              category,
+              locationValue:location.value,
+              guestCount,
+              roomCount,
+              bathroomCount,
+              imageSrc,
+              price:parseInt(price),
+              title,
+              description,
+              userId:currentUser.id
+            }
+          })
+          return NextResponse.json(listing)
+    } catch (error) {
+        return NextResponse.error()
+    }
 
 
-return NextResponse.json(listing)
+
+
    
 
 }
