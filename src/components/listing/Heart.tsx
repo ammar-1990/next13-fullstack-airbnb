@@ -1,3 +1,4 @@
+import useFavorite from '@/hooks/useFavorite'
 import { safeUser } from '@/types'
 import React from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
@@ -8,8 +9,7 @@ type Props = {
 }
 
 const Heart = ({listingId,currentUser}: Props) => {
-    const hasFavorited = false
-const toggleFavorite = ()=>{}
+const {hasFavorited,toggleFavorite} = useFavorite({currentUser,listingId})
 
   return (
     <div
