@@ -5,13 +5,16 @@ import useRentModal from "@/hooks/useRentModat";
 import { useState, useMemo } from "react";
 import { categories } from "../Navbar/Categories";
 import CategoryInput from "../CategoryInput";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Heading from "./Heading";
 import CountrySelect from "../CountrySelect";
 import dynamic from "next/dynamic";
 import Counter from "../Counter";
 import ImageUpload from "../ImageUpload";
 import Input from "../Input";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
@@ -224,6 +227,28 @@ onChange={(value)=>setCustomValues('imageSrc',value)}
     )
   }
 
+  const router = useRouter()
+
+  const onSubmit :SubmitHandler<FieldValues> = (data)=>{
+
+    if(step !== STEPS.PRICE) return onNext()
+
+    setIsLoading(true)
+
+    axios.post('/api/listings',data).then(()=>{
+      toast.success('Listing Created')
+      router.refresh()
+      reset()
+      setStep(STEPS.CATEGORY)
+      rentModal.onClose()
+    }).catch((error)=>{
+      toast.error('Something went wrong')
+      console.log(error)
+    }).finally(()=>{
+      setIsLoading(false)
+    })
+  }
+
   return (
     <Modal
       title="Airbnb is your home"
@@ -231,7 +256,7 @@ onChange={(value)=>setCustomValues('imageSrc',value)}
       secondaryActionLabel={secondaryActionLabel}
       isOpen={rentModal.isOpen}
       onClose={rentModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
       body={bodyContent}
     />
