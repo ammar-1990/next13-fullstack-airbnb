@@ -1,7 +1,7 @@
 'use client'
 
 import useCountries from '@/hooks/useCountries'
-import { safeUser } from '@/types'
+import { safeListing, safeUser } from '@/types'
 import {Listing,User,Reservation} from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import {useCallback, useMemo} from 'react'
@@ -10,7 +10,7 @@ import Image from 'next/image'
 import Heart from './Heart'
 
 type Props = {
-    data:Listing,
+    data:safeListing,
     currentUser?: safeUser|null ,
     reservation?:Reservation
     onAction?:(id:string)=>void

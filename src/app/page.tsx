@@ -27,7 +27,7 @@ if(listings.length === 0) return <EmptyState  showReset/>
       xl:grid-cols-5
       gap-8
       '>
-{listings.map((listing:any)=>(<ListingCard key={listing.id} data={listing} currentUser={currentUser}/>))}
+{listings.map((listing)=>(<ListingCard key={listing.id} data={listing} currentUser={currentUser}/>))}
       </div>
     </Container>
    </div>
