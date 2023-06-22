@@ -132,7 +132,7 @@ const isMainPage = pathName === '/'
 if(!isMainPage) return null
   return (
     <Container>
-        <div className="flex items-center p-4 justify-between overflow-x-auto ">
+        <div className="flex items-center p-4 py-3 justify-between overflow-x-auto ">
 {categories.map(el=><CategoryCard key={el.label} label={el.label} Icon={el.Icon} selected={category === el.label} />)}
         </div>
     </Container>

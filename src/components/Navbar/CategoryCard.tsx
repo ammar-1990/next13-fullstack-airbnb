@@ -46,7 +46,7 @@ router.push(url)
 
   return (
     <div onClick={handleClick}
-      className={`flex flex-col items-center justify-center gap-2 hover:text-neutral-800 cursor-pointer duration-300 p-3 border-b-2 flex-shrink-0 ${
+      className={`flex flex-col items-center justify-center gap-2 hover:text-neutral-800 cursor-pointer duration-300 px-3 border-b-2 flex-shrink-0 ${
         selected
           ? "border-b-neutral-800 text-neutral-800"
           : "border-b-transparent text-neutral-500"

@@ -5,12 +5,25 @@ import Logo from "./Logo"
 import Search from "./Search"
 import UserMenu from "./UserMenu"
 import { safeUser } from "@/types"
+import {useEffect , useState} from 'react'
 
 
 type Props = {currentUser?:safeUser | null}
 
 const Navbar = ({currentUser}: Props) => {
 console.log(currentUser)
+const [scroll,setScroll] = useState(false)
+useEffect(()=>{
+
+  const scrollFunc = ()=>{
+    setScroll(window.scrollY > 10)
+  }
+
+  window.addEventListener('scroll',scrollFunc)
+
+  return ()=> window.removeEventListener('scroll',scrollFunc)
+},[])
+
   return (
     <div className="fixed w-full bg-white  z-10  ">
       <div className="border-b py-4 shadow-sm">
@@ -23,7 +36,8 @@ console.log(currentUser)
       
         </Container>
         </div>
-        <Categories />
+        <div className={`${scroll && 'shadow-sm'} duration-300 shadow-neutral-400`}>     <Categories /></div>
+   
     </div>
   )
 }
