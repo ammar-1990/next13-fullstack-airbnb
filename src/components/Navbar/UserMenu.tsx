@@ -9,6 +9,7 @@ import useLoginModal from '@/hooks/useLoginModal'
 import { safeUser } from "@/types"
 import {signOut} from 'next-auth/react'
 import useRentModal from '@/hooks/useRentModat'
+import { useRouter } from 'next/navigation'
 
 
 
@@ -34,6 +35,8 @@ const handleRent = useCallback(()=>{
 if(!currentUser) return loginModal.onOpen()
 rentModal.onOpen()
 },[currentUser,loginModal,rentModal])
+
+const router = useRouter()
 
   return (
     <div className="flex gap-4 items-center relative">
@@ -66,7 +69,7 @@ rentModal.onOpen()
 
 {currentUser ? (
   <>
-  <NavItem onClick={()=>{}} label='My trips'/>
+  <NavItem onClick={()=>{router.push('/trips')}} label='My trips'/>
   <NavItem onClick={()=>{}} label='My favorites'/>
   <NavItem onClick={()=>{}} label='My reservations'/>
   <NavItem onClick={rentModal.onOpen} label='Airbnb home'/>

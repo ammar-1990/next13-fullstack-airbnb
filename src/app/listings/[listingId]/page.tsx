@@ -5,6 +5,7 @@ import getListingById from "@/actions/getListingById";
 import EmptyState from "@/components/EmptyState";
 import { useSearchParams } from "next/navigation";
 import ListingClient from "./ListingClient";
+import getReservations from "@/actions/getReservations";
 
 
 
@@ -17,6 +18,7 @@ const page = async ({params}: {params:Props}) => {
 
 const currentUser = await getSession()
   const listing = await getListingById(params)
+  const reservations = await getReservations(params)
 if(!listing) return <EmptyState  />
 
 
@@ -24,6 +26,7 @@ if(!listing) return <EmptyState  />
 <ListingClient 
 listing = {listing}
 currentUser = {currentUser}
+reservations={reservations}
 />
   )
 }

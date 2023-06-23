@@ -3,7 +3,7 @@
 import {differenceInCalendarDays, eachDayOfInterval} from 'date-fns'
 import Container from '@/components/Container'
 import { categories } from '@/components/Navbar/Categories'
-import { safeListing, safeUser } from '@/types'
+import { safeListing, safeReservation, safeUser } from '@/types'
 import {Reservation} from '@prisma/client'
 import { useMemo, useState, useCallback , useEffect} from 'react'
 import ListingHead from './ListingHead'
@@ -13,10 +13,11 @@ import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
 import ListingReservation from './ListingReservation'
+import { Range } from 'react-date-range'
 
 type Props = {
 
-    reservations?:Reservation[],
+    reservations?:safeReservation[],
     listing:safeListing &{ user: safeUser},
     currentUser?:safeUser | null
 }
@@ -51,7 +52,7 @@ dates = [...dates,...range]
 
 const [isLoading, setIsLoading] = useState(false)
 const [totalPrice, setTotalPrice] = useState(listing.price)
-const [dateRange, setDateRange] = useState(InitialDateRange)
+const [dateRange, setDateRange] = useState<Range>(InitialDateRange)
 
 const onCreateReservation = useCallback(()=>{
 if(!currentUser) return loginModal.onOpen()
