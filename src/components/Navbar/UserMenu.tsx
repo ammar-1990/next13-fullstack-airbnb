@@ -69,18 +69,18 @@ const router = useRouter()
 
 {currentUser ? (
   <>
-  <NavItem onClick={()=>{router.push('/trips')}} label='My trips'/>
-  <NavItem onClick={()=>{}} label='My favorites'/>
-  <NavItem onClick={()=>{}} label='My reservations'/>
-  <NavItem onClick={rentModal.onOpen} label='Airbnb home'/>
+  <NavItem onClick={()=>{router.push('/trips');setIsOpen(false)}} label='My trips'/>
+  <NavItem onClick={()=>{setIsOpen(false);}} label='My favorites'/>
+  <NavItem onClick={()=>{router.push('/reservations');setIsOpen(false)}} label='My reservations'/>
+  <NavItem onClick={()=>{rentModal.onOpen();setIsOpen(false)}} label='Airbnb home'/>
   <hr className='my-1 block'/>
-  <NavItem onClick={signOut} label='Logout'/>
+  <NavItem onClick={()=>{signOut();setIsOpen(false)}} label='Logout'/>
   </>
 ) : 
 (
 <>
-<NavItem onClick={loginModal.onOpen} label='Login'/>
-<NavItem onClick={registerModal.onOpen} label='Sign up'/>
+<NavItem onClick={()=>{loginModal.onOpen();setIsOpen(false)}} label='Login'/>
+<NavItem onClick={()=>{registerModal.onOpen();setIsOpen(false)}} label='Sign up'/>
 </>
 )}
 

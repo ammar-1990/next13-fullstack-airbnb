@@ -1,7 +1,7 @@
 'use client'
 
 import useCountries from '@/hooks/useCountries'
-import { safeListing, safeUser } from '@/types'
+import { safeListing, safeReservation, safeUser } from '@/types'
 import {Listing,User,Reservation} from '@prisma/client'
 import { useRouter } from 'next/navigation'
 import {useCallback, useMemo} from 'react'
@@ -12,7 +12,7 @@ import Heart from './Heart'
 type Props = {
     data:safeListing,
     currentUser?: safeUser|null ,
-    reservation?:Reservation
+    reservation?:safeReservation
     onAction?:(id:string)=>void
     disabled?:boolean,
     actionLabel?:string,
@@ -48,10 +48,11 @@ return data.price
         const start = new Date(reservation.startDate)
         const end = new Date(reservation.endDate)
 
-        return `${format(start, 'pp')} - ${format(end, 'pp')}`
+        return `${format(start, 'PP')} - ${format(end, 'PP')}`
 
 
     },[reservation])
+    console.log(reservationDate)
 
   return (
     <div
@@ -77,7 +78,7 @@ return data.price
 
         </div>
         {onAction && actionLabel && (
-            <button disabled={disabled} onClick={handleCancel} className='border border-black w-full py-3 rounded-md '>{actionLabel}</button>
+            <button disabled={disabled} onClick={handleCancel} className='text-white bg-rose-500 w-full disabled:bg-rose-500/80 py-2 rounded-md hover:bg-rose-500/80 duration-300'>{`${disabled?'Canceling...' : actionLabel}`}</button>
         )}
 
         </div>
