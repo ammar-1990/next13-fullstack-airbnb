@@ -70,7 +70,7 @@ const router = useRouter()
 {currentUser ? (
   <>
   <NavItem onClick={()=>{router.push('/trips');setIsOpen(false)}} label='My trips'/>
-  <NavItem onClick={()=>{setIsOpen(false);}} label='My favorites'/>
+  <NavItem onClick={()=>{setIsOpen(false);router.push('/favorites')}} label='My favorites'/>
   <NavItem onClick={()=>{router.push('/reservations');setIsOpen(false)}} label='My reservations'/>
   <NavItem onClick={()=>{rentModal.onOpen();setIsOpen(false)}} label='Airbnb home'/>
   <hr className='my-1 block'/>
