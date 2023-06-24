@@ -6,8 +6,11 @@ import useSearchModal from "@/hooks/useSearchModal";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Range } from "react-date-range";
 import dynamic from "next/dynamic";
-import { CountrySelectValue } from "../CountrySelect";
-import { formatISO } from "date-fns";
+import CountrySelect, { CountrySelectValue } from "../CountrySelect";
+import { formatISO, setDate } from "date-fns";
+import Heading from "./Heading";
+import Calendar from "@/app/listings/[listingId]/Calendar";
+import Counter from "../Counter";
 
 type Props = {};
 
@@ -51,7 +54,7 @@ const SearchModal = (props: Props) => {
 
   const onSubmit = useCallback(async () => {
     if (step !== STEPS.INFO) {
-      onNext();
+      return onNext();
     }
 
     let currentQuery = {};
@@ -60,36 +63,111 @@ const SearchModal = (props: Props) => {
       currentQuery = qs.parse(params.toString());
     }
 
-    const updatedQuery:any = {
+    const updatedQuery: any = {
       ...currentQuery,
       locationValue: location?.value,
       guestCount,
-      roomsCount,bathroomsCount
+      roomsCount,
+      bathroomsCount,
     };
 
-    if(dateRange.startDate){
-updatedQuery.startDate = formatISO(dateRange.startDate)
+    if (dateRange.startDate) {
+      updatedQuery.startDate = formatISO(dateRange.startDate);
     }
-    if(dateRange.endDate){
-updatedQuery.endDate = formatISO(dateRange.endDate)
+    if (dateRange.endDate) {
+      updatedQuery.endDate = formatISO(dateRange.endDate);
     }
-const url = qs.stringifyUrl({
-    url:'/',
-    query:updatedQuery
-},{skipNull:true})
-setStep(STEPS.LOCATION)
-searchModal.onClose()
-router.push(url)
+    const url = qs.stringifyUrl(
+      {
+        url: "/",
+        query: updatedQuery,
+      },
+      { skipNull: true }
+    );
+    setStep(STEPS.LOCATION);
+    searchModal.onClose();
+    router.push(url);
+  }, [
+    step,
+    searchModal,
+    location,
+    guestCount,
+    roomsCount,
+    bathroomsCount,
+    router,
+    dateRange,
+    onNext,
+    params,
+  ]);
 
-  }, [step,searchModal,location,guestCount,roomsCount,bathroomsCount,router,dateRange,onNext,params]);
+  const actionLabel = useMemo(() => {
+    if (step === STEPS.INFO) return "Search";
+    else {
+      return "Next";
+    }
+  }, [step]);
+
+  const secondaryActionLabel = useMemo(() => {
+    if (step === STEPS.LOCATION) return undefined;
+    else {
+      return "Back";
+    }
+  }, [step]);
+
+  let bodyContent = (
+    <div className="flex flex-col gap-3">
+      <Heading
+        title="Where do you want to go?"
+        description="Find perfect location!"
+      />
+      <CountrySelect
+        value={location}
+        onChange={(value) => setLocation(value as CountrySelectValue)}
+      />
+      <hr />
+      <Map center={location?.latlng} />
+    </div>
+  );
+
+  if (step === STEPS.INFO) {
+    bodyContent = (
+      <div className="flex flex-col gap-3">
+        <Heading
+          title="More information"
+          description="Find your perfect place!"
+        />
+        <Counter title="Guests" subtitle="How many guests are coming?" value={guestCount} onChange={(value)=>setGuestCount(value)} />
+        <Counter title="Rooms" subtitle="How many rooms do you need?" value={roomsCount} onChange={(value)=>setRoomsCount(value)} />
+        <Counter title="Bathrooms" subtitle="How many bathrooms do you need?" value={bathroomsCount} onChange={(value)=>setBathoomsCount(value)} />
+      </div>
+    );
+  }
+
+  if (step === STEPS.DATE) {
+    bodyContent = (
+      <div className="flex flex-col gap-3">
+        <Heading
+          title="When are you planning to go?"
+          description="Make sure everyone is free!"
+        />
+        <Calendar
+          value={dateRange}
+          onChange={(value) => setDateRange(value.selection)}
+        />
+      </div>
+    );
+  }
 
   return (
     <Modal
       isOpen={searchModal.isOpen}
       onClose={searchModal.onClose}
-      onSubmit={searchModal.onOpen}
+      onSubmit={onSubmit}
       title="Filters"
-      actionLabel="Search"
+      actionLabel={actionLabel}
+      body={bodyContent}
+      secondaryActionLabel={secondaryActionLabel}
+      secondaryAction={step === STEPS.LOCATION ? undefined : onBack}
     />
   );
 };
