@@ -3,10 +3,15 @@ import getListings from '@/actions/getListings'
 import Container from '@/components/Container'
 import EmptyState from '@/components/EmptyState'
 import ListingCard from '@/components/listing/ListingCard'
-import Image from 'next/image'
+import { Props } from '@/actions/getListings'
 
-export default async function Home() {
-  const listings = await getListings()
+type HomeProps = {
+  searchParams:Props
+}
+
+
+export default async function Home({searchParams}:HomeProps) {
+  const listings = await getListings(searchParams)
 const currentUser =await getSession()
 
 
