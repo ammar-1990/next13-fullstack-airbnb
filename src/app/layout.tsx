@@ -8,10 +8,13 @@ import LoginModal from "@/components/modals/LoginModal";
 import { getSession } from "@/actions/getCurrentUser";
 import RentModal from "@/components/modals/RentModal";
 import SearchModal from "@/components/modals/SearchModal";
+import {Metadata} from 'next'
 
-export const metadata = {
+export const metadata:Metadata = {
   title: "Airbnb",
   description: "Airbnb clone",
+
+ 
 };
 
 const font = Nunito({
@@ -27,6 +30,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+   
+      </head>
       <body className={font.className}>
         <RentModal />
         <RegisterModal />

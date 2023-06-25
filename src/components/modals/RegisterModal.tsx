@@ -76,7 +76,7 @@ const RegisterModal = (props: Props) => {
 
   const footerContent = (
     <div>
-      {/* <button type="button" onClick={()=>signIn('github')} className="bg-slate-900 text-white rounded-md py-3 w-full">Continue with Github</button> */}
+   
       {" "}
       <p className="text-neutral-500 mt-3">
         Already have an account ?{" "}
@@ -100,7 +100,7 @@ const RegisterModal = (props: Props) => {
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
-      secondaryActionLabel="Login with Github"
+    
     />
   );
 };
